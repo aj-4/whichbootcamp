@@ -67,19 +67,22 @@ x - json parse error on prod
 x - Get HTTPS certificate
 x - Setup Winston Logger
 
+8/31
+----
+x - Github Private
+
 -------------
 TODO ========
 -------------
 TODO - write a deploy script (ie, build, delete node_modules, move build/, ssh, restart)
 TODO - re upload bootcamps (via curl?)
 
-TODO - Github Private
 TODO - protect private DB endpoints (?)
 TODO - Put icons on cloud front
 TODO - get feedback from peers
 TODO - contact press / product hunt / reddit
 
-PW - rlrdovxvqnnwgtcw
+SMTP APP PW - rlrdovxvqnnwgtcw
 
 -----------
 V2 IDEAS ==

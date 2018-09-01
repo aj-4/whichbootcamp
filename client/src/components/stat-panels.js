@@ -73,7 +73,8 @@ class ControlledExpansionPanels extends React.Component {
   badgeURLs = {
     Javascript: '/img/js-logo.png',
     Node: '/img/node-js-logo.png',
-    Ruby: '/img/ruby-logo.png'
+    Ruby: '/img/ruby-logo.png',
+    Python: '/img/python-logo.png'
   }
 
   programIcons = {

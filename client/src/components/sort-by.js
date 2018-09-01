@@ -7,13 +7,17 @@ import { withStyles } from '@material-ui/core/styles';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import PersonIcon from '@material-ui/icons/Person';
+import PeopleIcon from '@material-ui/icons/People';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 
 const styles = theme => ({
   root: {
     width: '50vw',
-    margin: '0 auto',
+    margin: '30px auto',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -51,18 +55,58 @@ class SortBy extends Component {
 
     _handleSelect(itemName) {
         const {handleSort} = this.props;
-        handleSort(itemName)
-        this.setState({selected: itemName});
+        const {selected, descending} = this.state;
+        let dsc;
+        if (selected === itemName) {
+            dsc = !descending;
+        } else {
+            dsc = true;
+        }
+        handleSort(itemName, dsc)
+        this.setState({selected: itemName, descending: dsc});
     }
 
-    _getStyle(itemName) {
+    _getActiveIcon(camel, label, ascIcon, descIcon) {
+        const {descending} = this.state;
+        const {classes} = this.props;
+        const DescIcon = descIcon;
+        const AscIcon = ascIcon
+        return (
+            <MenuItem 
+                className={classes.menuItem} 
+                style={{backgroundColor: descending ? '#74B86D' : '#B05A4E'}} 
+                onClick={() => this._handleSelect(camel)}
+            >
+                <ListItemIcon className={classes.icon} >
+                    {descending ? <AscIcon /> : <DescIcon />}
+                </ListItemIcon>
+                <ListItemText classes={{ primary: classes.primary }} inset primary={label} />
+            </MenuItem>
+        )
+    }
+
+    _getNormalIcon(camel, label, neturalIcon) {
+        const NeutralIcon = neturalIcon;
+        const {classes} = this.props;
+        return (
+            <MenuItem 
+                className={classes.menuItem} 
+                onClick={() => this._handleSelect(camel)}
+            >
+                <ListItemIcon className={classes.icon} >
+                    <NeutralIcon />
+                </ListItemIcon>
+                <ListItemText classes={{ primary: classes.primary }} inset primary={label} />
+            </MenuItem>
+        )
+    }
+
+    _getIcon(camel, label, ascIcon, descIcon, neutralIcon) {
         const {selected} = this.state;
-        if (itemName === selected) {
-            return {
-                backgroundColor: 'rgba(55, 72, 172, .6)',
-            }
+        if (camel === selected) {
+            return this._getActiveIcon(camel, label, ascIcon, descIcon);
         } else {
-            return {}
+            return this._getNormalIcon(camel, label, neutralIcon);
         }
     }
 
@@ -72,26 +116,11 @@ class SortBy extends Component {
         return (
             <Paper className={classes.root} data-aos="fade-right">
                 <div className={classes.title}>SORT BY</div> 
-            <MenuList>
-                <MenuItem className={classes.menuItem} style={this._getStyle('rating')} onClick={() => this._handleSelect('rating')}>
-                    <ListItemIcon className={classes.icon} >
-                        <ThumbUpIcon />
-                    </ListItemIcon>
-                    <ListItemText classes={{ primary: classes.primary }} inset primary="Rating" />
-                </MenuItem>
-                <MenuItem className={classes.menuItem} style={this._getStyle('cost')} onClick={() => this._handleSelect('cost')}>
-                    <ListItemIcon className={classes.icon}>
-                        <AttachMoneyIcon />
-                    </ListItemIcon>
-                    <ListItemText classes={{ primary: classes.primary }} inset primary="Cost" />
-                </MenuItem>
-                <MenuItem className={classes.menuItem} style={this._getStyle('reviews')} onClick={() => this._handleSelect('reviews')}>
-                    <ListItemIcon className={classes.icon}>
-                        <TrendingUpIcon />
-                    </ListItemIcon>
-                    <ListItemText classes={{ primary: classes.primary }} inset primary="Review Count" />
-                </MenuItem>
-            </MenuList>
+                <MenuList>
+                    {this._getIcon('rating', 'Rating', ThumbUpIcon, ThumbDownIcon, ThumbUpIcon)}
+                    {this._getIcon('cost', 'Cost', TrendingUpIcon, TrendingDownIcon, AttachMoneyIcon)}
+                    {this._getIcon('reviews', 'Review Count', PeopleIcon, PersonIcon, PeopleIcon)}
+                </MenuList>
             </Paper>
         );
     }

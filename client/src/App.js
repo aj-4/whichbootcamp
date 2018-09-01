@@ -29,17 +29,29 @@ class App extends Component {
     fetchBootcamps().then(bootcampList => this._getInitialState(bootcampList))
   }
 
-  handleSort(sortParam) {
+  handleSort(sortParam, descending) {
     const {bootcampList} = this.state;
     switch(sortParam) {
       case 'rating':
-        bootcampList.sort(sortByRating);
+        if (descending) {
+          bootcampList.sort(sortByRating);
+        } else {
+          bootcampList.sort(sortByRating).reverse();
+        }
         break;
       case 'cost':
-        bootcampList.sort(sortByWebDevCost);
+        if (descending) {
+          bootcampList.sort(sortByWebDevCost);
+        } else {
+          bootcampList.sort(sortByWebDevCost).reverse();
+        }
         break;
       case 'reviews':
-        bootcampList.sort(sortByReviewCount);
+        if (descending) {
+          bootcampList.sort(sortByReviewCount);
+        } else {
+          bootcampList.sort(sortByReviewCount).reverse();
+        }
         break;
       default:
         break;
@@ -51,6 +63,7 @@ class App extends Component {
   // 2. attach a ranking by metascore to each bootcamp object
   _getInitialState(bootcampList) {
     bootcampList.sort(sortByRating);
+    console.log('list is', bootcampList);
     bootcampList.forEach((bootcamp, i) => {
       bootcamp.ranking = i + 1
     })
