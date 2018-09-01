@@ -1,0 +1,30 @@
+{
+  "name": "which_bootcamp_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "app-root-path": "^2.1.0",
+    "body-parser": "^1.18.3",
+    "crypto-js": "^3.1.9-1",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "mysql2": "^1.6.1",
+    "nodemailer": "^4.6.8",
+    "raven": "^2.6.3",
+    "redis": "^2.8.0",
+    "sequelize": "^4.38.0",
+    "sequelize-cli": "^4.1.0",
+    "winston": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}

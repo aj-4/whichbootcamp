@@ -1,0 +1,91 @@
+Hypothesis:
+- There is already a big site for bootcampers (Switchup) but the reviews seem skewed / wrong. People will also want to consult multiple resources and articles before making such a big decision so there is a lot of space in the market
+
+MVP:
+- Similar to nomad list, just provide information in a super clean UI - there will be icons for which programming languages are used as well as trending popularity. There will also be links to other articles around the web (switchup, top answers on quota, etc.
+
+Built w/ React and Firebase
+
+Additional Features:
+X First there will be email validation to leave a review, if people don't check the box, 'did you attend this bootcamp' their review will still be accepted but ultimately ignored.  Keeps out noise
+
+- The review flow will be answering questions (would you attend this bootcamp again? were the instructors experienced and passionate? What is your future outlook for this bootcamp? How was the career coaching? Was it worth what you paid?)
+
+- Bootcamp news pulled in from across the web (Google RSS API from NPM ? )
+
+- Trending searches / clicks for each bootcamp / web sentiment analysis / google trends API
+
+8/18/18
+
+------
+HEADER
+------
+HAVE YOU ALREADY ATTENDED A BOOTCAMP?
+Yes/No
+------
+If no, show the card list,
+If yes, show the feedback form, then the card list
+-------
+
+- Header, done.
+- Survey, done
+
+8/19/18
+Idea section:
+- Add a trend section to show bootcamp data over time
+- Set a cookie to prevent multiple submissions
+- Block IP addresses somehow from spamming
+
+x - design cards
+
+8/25
+----
+x - Add table for aggregated reviews, (Bootcamps -- BootcampStats)
+x - Convert survey into a modal
+x - front end API to submit reviews
+x - front end API to hydrate DB data
+x - add redis to update db averages
+x - add BOOTCAMP cols for cost, program details
+x - deploy client @ whichbootcamp.com
+
+8/26
+----
+x - return number of reviews
+x - sorting
+
+8/28
+----
+x - Create spreadsheet of bootcamp data
+x - Collect bootcamp icons
+x - setup MySQL and Redis on Droplet
+x - setup email review validation
+
+8/29
+----
+x - 304 on email verification? (Possibly not issue on nginx)
+x - json parse error on prod
+x - Get HTTPS certificate
+x - Setup Winston Logger
+
+-------------
+TODO ========
+-------------
+TODO - write a deploy script (ie, build, delete node_modules, move build/, ssh, restart)
+TODO - re upload bootcamps (via curl?)
+
+TODO - Github Private
+TODO - protect private DB endpoints (?)
+TODO - Put icons on cloud front
+TODO - get feedback from peers
+TODO - contact press / product hunt / reddit
+
+PW - rlrdovxvqnnwgtcw
+
+-----------
+V2 IDEAS ==
+-----------
+Bootcamp-specific pages which scrape news articles from the internet
+Trends based on reviews and sentiment analysis
+A community of people with questions about specific bootcamps / alums
+
+

@@ -1,0 +1,43 @@
+.list-container {
+    height: 100vh;
+}
+
+.bc-card {
+    width: 28%;
+    height: 200px;
+    background-color: lightblue;
+    color: white;
+    position: relative;
+}
+
+.bc-card-img-container img {
+    width: 80%;
+    margin-top: 10%;
+}
+
+.language-badge {
+    width: 80px;
+    height: auto;
+    float: left;
+    /* position: absolute; */
+    /* left: 0; */
+    /* bottom: 10%; */
+}
+
+.example-enter {
+    opacity: 0.01;
+  }
+  
+  .example-enter.example-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+  
+  .example-leave {
+    opacity: 1;
+  }
+  
+  .example-leave.example-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+  }
