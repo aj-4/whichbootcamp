@@ -1,5 +1,5 @@
 {
-  "name" : "which_bootcamp",
+  "name" : "whichbootcamp",
   "script" : "app.js",
   "env_production" : {
     "NODE_ENV": "production"

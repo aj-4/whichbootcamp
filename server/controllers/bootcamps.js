@@ -50,7 +50,7 @@ module.exports = {
         if (process.env.NODE_ENV === 'production') {
           // updatedCacheInterval = 1800000;
           // every 10m
-          updateCacheInterval = 3600000 
+          updateCacheInterval = 360000;
         } else {
           updateCacheInterval = 5000;
         }
