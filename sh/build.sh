@@ -4,19 +4,21 @@
 
 echo "Pulling master..."
 sleep 2
-cd ~/which_bootcamp
+cd ~/whichbootcamp
 git pull origin master &&
-cd ./client 
+npm install &&
+cd ./client &&
+npm install
 
 echo "Building client..."
 sleep 2
 npm run build &&
-mv ~/which_bootcamp/build ~/which_bootcamp
+mv ~/whichbootcamp/client/build ~/whichbootcamp
 
 echo "Restarting app..."
 sleep 2
-cd ~/which_bootcamp
-pm2 stop which_bootcamp && pm2 del which_bootcamp && pm2 start process.json -env production
+cd ~/whichbootcamp
+pm2 stop which_bootcamp && pm2 del which_bootcamp && pm2 start process.json --env production
 
 echo "App running!"
 

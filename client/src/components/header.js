@@ -23,6 +23,11 @@ const styles = theme => ({
             cursor: 'pointer',
             backgroundColor: 'rgba(255,255,255,.8)'
         }
+    },
+    buttonText: {
+        textTransform: 'uppercase',
+        fontSize: '14px',
+        fontWeight: '800'
     }
 });
 

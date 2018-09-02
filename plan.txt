@@ -70,12 +70,12 @@ x - Setup Winston Logger
 8/31
 ----
 x - Github Private
+x - re upload bootcamps (via curl?)
 
 -------------
 TODO ========
 -------------
 TODO - write a deploy script (ie, build, delete node_modules, move build/, ssh, restart)
-TODO - re upload bootcamps (via curl?)
 
 TODO - protect private DB endpoints (?)
 TODO - Put icons on cloud front

@@ -4,7 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css'
 
 import Header from './components/header';
-import SurveyModal from './components/survey-modal';
+import Modal from './components/modal';
 import BootcampList from './components/bootcamp-list';
 import {fetchBootcamps} from './actions';
 
@@ -20,8 +20,12 @@ class App extends Component {
     super(props);
     this.state = {
       bootcampList: [],
+      surveyIsOpen: false,
+      feedbackIsOpen: false
     }
-    this.handleSort = this.handleSort.bind(this)
+    this.handleSort = this.handleSort.bind(this);
+    this.toggleSurvey = this.toggleSurvey.bind(this);
+    this.toggleFeedback = this.toggleFeedback.bind(this);
   }
 
   componentDidMount() {
@@ -59,11 +63,18 @@ class App extends Component {
     this.setState({bootcampList});
   }
 
+  toggleSurvey() {
+    this.setState({surveyIsOpen: !this.state.surveyIsOpen})
+  }
+
+  toggleFeedback() {
+    this.setState({feedbackIsOpen: !this.state.feedbackIsOpen})
+  }
+
   // 1. complete initial sort (by ranking) 
   // 2. attach a ranking by metascore to each bootcamp object
   _getInitialState(bootcampList) {
     bootcampList.sort(sortByRating);
-    console.log('list is', bootcampList);
     bootcampList.forEach((bootcamp, i) => {
       bootcamp.ranking = i + 1
     })
@@ -86,13 +97,14 @@ class App extends Component {
   ]
 
   render() {
-    const {bootcampList} = this.state;
+    const {bootcampList, surveyIsOpen, feedbackIsOpen} = this.state;
 
     return (
       <div className="App">
         <Header />
-        <SurveyModal bootcampList={bootcampList}/>
-        <BootcampList bootcampList={bootcampList} handleSort={this.handleSort}/>
+        <Modal type="survey" bootcampList={bootcampList} isOpen={surveyIsOpen} closeFn={this.toggleSurvey}/>
+        <Modal type="feedback" bootcampList={bootcampList} isOpen={feedbackIsOpen} closeFn={this.toggleFeedback}/>
+        <BootcampList bootcampList={bootcampList} handleSort={this.handleSort} openSurvey={this.toggleSurvey} openFeedback={this.toggleFeedback}/>
       </div>
     );
   }

@@ -192,7 +192,7 @@ class Survey extends Component {
     const {classes} = this.props;
     return (
         <div className={classes.questionsHeader}>
-            <ThumbUpIcon className={classes.thumbIcon} />
+            Enjoy the site, and good luck!
         </div>
     )
   }

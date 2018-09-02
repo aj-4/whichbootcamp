@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import {getCookie} from '../utils/cookies';
 
 import Survey from './survey';
+import Feedback from './feedback';
 
 function getModalStyle() {
   const top = 50;
@@ -34,43 +35,49 @@ class SurveyModal extends React.Component {
   
   constructor(props) {
     super(props);
-    const surveyCookie = getCookie('surveyComplete');
+    const {isOpen} = this.props;
+    // const surveyCookie = getCookie('surveyComplete');
     this.state = {
-      surveyCookie, 
-      open: !Boolean(surveyCookie)
+      // surveyCookie, 
+      open: isOpen
     }
   }
 
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
+  _renderbyType() {
+    const {type, bootcampList} = this.props;
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
+    switch(type) {
+      case 'survey': 
+        return <Survey bootcampList={bootcampList}/>
+      case 'feedback':
+        return <Feedback />
+      default:
+        return <div />
+    }
+  }
 
   render() {
-    const {surveyCookie} = this.state;
-    const { classes, bootcampList } = this.props;
+    // const {surveyCookie} = this.state;
+    const { classes, closeFn, isOpen } = this.props;
 
     return (
       <div>
-        {
+        {/* {
           // we don't want people who have left a review to see this
           surveyCookie !== 'YES' &&
           <div>
             <Typography gutterBottom>Have you already attended a bootcamp?</Typography>
             <Button onClick={this.handleOpen}>Leave a Quick Review</Button>
           </div>
-        }
+        } */}
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
-          open={this.state.open}
-          onClose={this.handleClose}
+          open={isOpen}
+          onClose={closeFn}
         >
           <div style={getModalStyle()} className={classes.paper}>
-            <Survey bootcampList={bootcampList}/>
+            {this._renderbyType()}
           </div>
         </Modal>
       </div>
