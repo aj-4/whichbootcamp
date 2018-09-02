@@ -100,7 +100,8 @@ class BootcampCard extends Component {
         bcColor,
         ranking,
         avgReviewStats,
-        Programs
+        Programs,
+        websiteURL
     }, classes, data, i} = this.props;
 
     const reviewCount = +avgReviewStats.reviewCount;
@@ -108,20 +109,21 @@ class BootcampCard extends Component {
 
   return (
       <div 
-        data-aos="fade-up" 
+        // data-aos="fade-up" 
         ref="card"
-        data-aos-delay={`${(i % 3) * 200}`}
+        // data-aos-delay={`${(i % 3) * 200}`}
         className={`${classes.cardContainer}`}
       >
         <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
-          <div 
-            className={classes.cardHeroContainer} 
-            style={{
-              borderBottom: `5px solid ${bcColor}`,
-              borderTop: `5px solid ${bcColor}`
-            }}
-          >
+          <a href={websiteURL}>
+            <div 
+              className={classes.cardHeroContainer} 
+              style={{
+                borderBottom: `5px solid ${bcColor}`,
+                borderTop: `5px solid ${bcColor}`
+              }}
+            >
             <div className={classes.iconSummary} style={{color: bcColor}}>
               <div className={classes.iconStat}>
                 <ThumbUpIcon /> <div className={classes.iconStatText}>&nbsp;{getOrdinal(ranking)}</div>
@@ -136,6 +138,7 @@ class BootcampCard extends Component {
             <div style={{width: '100%', height: '100%', backgroundColor: bcColor, opacity: .2}} />
             <img className={classes.cardHeroImg} src={logoURL} alt="logo" />
           </div>
+          </a>
         </CardContent>
           <StatPanels 
             data={data}

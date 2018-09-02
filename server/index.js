@@ -4,8 +4,9 @@ const Raven = require('raven')
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const winston = require('./server/config/winston')
-const error = require('./server/controllers/error')
+const winston = require('./config/winston');
+const error = require('./controllers/error');
+const serverRenderer = require('./middleware/serverRenderer');
 
 const app = express();
 const PORT = process.env.NODE_ENV === 'production' ? 3000 : 3001;
@@ -15,16 +16,17 @@ app.use(Raven.requestHandler());
 
 app.set('etag', false);
 
+app.use('^/$', serverRenderer);
 // if (process.env.NODE_ENV === 'production') {
   // app.use(express.static(path.join(__dirname,'client/build')));
-  app.use(express.static(path.join(__dirname,'client/build')));
+  app.use(express.static(path.join(__dirname,'..','client/build')));
 // }
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('tiny', {stream: winston.stream}));
 
-require('./server/routes')(app);
+require('./routes')(app);
 app.get('*', function(req, res, next) {
   // This middleware throws an error, so Express will go straight to
   // the next error handler

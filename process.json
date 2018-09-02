@@ -1,6 +1,6 @@
 {
   "name" : "whichbootcamp",
-  "script" : "app.js",
+  "script" : "./server/bootstrap.js",
   "env_production" : {
     "NODE_ENV": "production"
   }

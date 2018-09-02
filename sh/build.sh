@@ -2,21 +2,23 @@
 
 # pulls, builds, deploys current version on droplet
 
-echo "Pulling master..."
-sleep 2
-cd ~/whichbootcamp
-git pull origin master &&
-npm install &&
-cd ./client &&
-npm install &&
+echo "Connecting to VPS"; sleep 2
+ssh aaron@142.93.243.183 << EOF
+ 
+  echo "Pulling master..."; sleep 2
+  cd ~/whichbootcamp
+  git pull origin master &&
 
-echo "Building client..."
-sleep 2
-npm run build &&
+  echo "Getting server packages..."; npm install &&
+  cd ./client &&
+  echo "Getting client packages..."; npm install &&
 
-echo "Restarting app..."
-sleep 2
-cd ~/whichbootcamp
-pm2 stop which_bootcamp && pm2 del which_bootcamp && pm2 start process.json --env production
+  echo "Building client..."; sleep 2
+  npm run build &&
 
-echo "App running!"
+  echo "Restarting PM2..."; sleep 2
+  cd ~/whichbootcamp
+  pm2 stop whichbootcamp && pm2 del whichbootcamp && pm2 start process.json --env production
+
+  echo "App running!"
+EOF

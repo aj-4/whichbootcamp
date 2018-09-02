@@ -7,7 +7,7 @@ const styles = theme => ({
     ctr: {
         marginTop: '30px'
     },
-    button: {
+    buttonCta: {
         backgroundColor: 'white',
         width: '30%',
         margin: '0 auto',
@@ -55,9 +55,9 @@ class Header extends Component {
                         A list of the most popular coding bootcamps
                     </div>
                     <div className={classes.ctr}>
-                        <div className={classes.button} onClick={this.scrollToBootcamps}>
+                        <div className={classes.buttonCta} onClick={this.scrollToBootcamps}>
                             <div className={classes.buttonText}>see the list </div>
-                            <ArrowDownIcon className={classes.icon} />
+                            <ArrowDownIcon />
                         </div>
                     </div>
                     </div>

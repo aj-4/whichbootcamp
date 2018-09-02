@@ -67,15 +67,20 @@ x - json parse error on prod
 x - Get HTTPS certificate
 x - Setup Winston Logger
 
-8/31
-----
-x - Github Private
+9/1
+---
+x - write a deploy script (ie, build, delete node_modules, move build/, ssh, restart)
 x - re upload bootcamps (via curl?)
+x - Github Private
+x - Disable service worker
 
--------------
-TODO ========
--------------
-TODO - write a deploy script (ie, build, delete node_modules, move build/, ssh, restart)
+TODO - Add feedback BE
+TODO - Improve bootcamp details / data
+TODO - Expose bootcamp URLs (open in new tab?)
+TODO - Fix bug of NOT YET Review triggering YES flow
+
+TODO - Add server side rendering
+TODO - Add mobile responsive
 
 TODO - protect private DB endpoints (?)
 TODO - Put icons on cloud front
