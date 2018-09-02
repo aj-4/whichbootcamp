@@ -23,6 +23,7 @@ class App extends Component {
       surveyIsOpen: false,
       feedbackIsOpen: false
     }
+    fetchBootcamps().then(bootcampList => this._getInitialState(bootcampList))
     this.handleSort = this.handleSort.bind(this);
     this.toggleSurvey = this.toggleSurvey.bind(this);
     this.toggleFeedback = this.toggleFeedback.bind(this);
@@ -30,7 +31,6 @@ class App extends Component {
 
   componentDidMount() {
     AOS.init();
-    fetchBootcamps().then(bootcampList => this._getInitialState(bootcampList))
   }
 
   handleSort(sortParam, descending) {
