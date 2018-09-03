@@ -8,7 +8,6 @@ export const fetchBootcamps = () => {
 
 export const submitSurvey = state => {
     const surveyData = mapStateToSurvey(state);
-    console.log('submitting survey data', surveyData);
     return fetch('/api/review', {
         headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -16,10 +15,22 @@ export const submitSurvey = state => {
         method: 'POST',
         body: JSON.stringify(surveyData)
     }).then(res => {
-      console.log('success1! got res', res);
       return res.json()
     })
       .catch(err => console.log('ERROR IN SUBMIT', err))
+}
+
+export const submitFeedback = (feedback, feedbackType) => {
+  return fetch('/api/feedback', {
+      headers: {
+          "Content-Type": "application/json; charset=utf-8",
+      },
+      method: 'POST',
+      body: JSON.stringify({feedback, feedbackType})
+  }).then(res => {
+    return res.json()
+  })
+    .catch(err => console.log('ERROR IN SUBMIT', err))
 }
 
 export const sendEmail = (name, email, message) => {

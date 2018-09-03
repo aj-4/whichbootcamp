@@ -1,24 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormLabel from '@material-ui/core/FormLabel';
-import Radio from '@material-ui/core/Radio';
-import DoneIcon from '@material-ui/icons/ThumbUp';
 import BugIcon from '@material-ui/icons/BugReport';
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIcon from '@material-ui/icons/ArrowBackIos';
+import {submitFeedback} from '../actions';
 
-import {surveyQuestions} from '../constants';
 import '../css/bootcamp-list.css';
 // import {submitFeedback} from '../actions';
 
@@ -30,7 +20,7 @@ const styles = theme => ({
         display: 'flex',
         justifyContent: 'right',
         flexDirection: 'row',
-        width: (theme.spacing.unit * 50 + theme.spacing.unit * 8) * surveyQuestions.length,
+        width: (theme.spacing.unit * 50 + theme.spacing.unit * 8) * 2,
         transition: '0.5s ease-in all',
         ':last-child': {
             width: '200px'
@@ -78,12 +68,24 @@ const styles = theme => ({
     prevIcon: {
         position: 'absolute',
         left: '10%',
-        bottom: '10%'
+        bottom: '10%',
+        color: 'darkgrey',
+        '&:hover': {
+            cursor: 'pointer',
+            color: 'black'
+        }
     },
     nextIcon: {
         position: 'absolute',
         right: '10%',
-        bottom: '10%'
+        bottom: '10%',
+        display: 'flex',
+        alignItems: 'center',
+        color: 'darkgrey',
+        '&:hover': {
+            cursor: 'pointer',
+            color: 'black'
+        }
     },
     icons: {
         display: 'flex',
@@ -104,50 +106,40 @@ const styles = theme => ({
 class Survey extends Component {
   
   state = {
-    onPage: 0
-  }
-
-  _slideNext() {
-    if (this.state.onQuestion >= surveyQuestions.length) return;
-    this.setState({onQuestion: this.state.onQuestion + 1},
-        () => {
-            let questionWidth = this.refs.questionContainer.offsetWidth;
-            this.refs.slider.style.transform = `translateX(-${this.state.onQuestion * questionWidth}px)`;
-        }
-    )
-  }
-
-  _slidePrev() {
-    if (this.state.onQuestion === -1) return;
-    this.setState({onQuestion: this.state.onQuestion - 1},
-        () => {
-            if (this.state.onQuestion > -1) {
-                let questionWidth = this.refs.questionContainer.offsetWidth;
-                this.refs.slider.style.transform = `translateX(-${this.state.onQuestion * questionWidth}px)`;
-            }
-        }
-    )
+    onView: 0
   }
 
   clickType = feedbackType => {
-      this.setState({feedbackType});
-    //   this._slideNext()
+      console.log('clicked', feedbackType);
+      this.setState({feedbackType, onView: 1});
   }
 
   submitFeedback = (e) => {
-    e.preventDefault();
-    // submitFeedback(this.state)
-    // .then(res => {
-    //     this.setState({
-    //         feedbackDone: true,
-    //         doneMessage: `A verification email has been sent to ${res.email}`
-    //     });
-    // })
-    // .catch(err => {
-    //     this.setState({
-    //         feedbackError: 'An error has occured'
-    //     })
-    // })
+    const {feedbackType, feedback} = this.state;
+    if (!feedback || feedback.length < 5) {
+        this.setState({feedbackError: "You'll need to type a bit more"})
+        return;
+    }
+    submitFeedback(feedback, feedbackType)
+    .then(res => {
+        this.setState({
+            onView: 2,
+            feedbackDone: true,
+        });
+    })
+    .catch(err => {
+        this.setState({
+            feedbackError: 'Hmm...that didn\'t work.'
+        })
+    })
+  }
+
+  handleChange = text => {
+      const {feedback} = this.state;
+      this.setState({feedback: text.target.value});
+      if (feedback && feedback.length > 5) {
+          this.setState({feedbackError: null})
+      }
   }
 
   _renderInitial() {
@@ -159,7 +151,7 @@ class Survey extends Component {
                     Thanks! <br/><br/>
                     Which type of feedback?
                 </h3>
-                <div className={classes.icons}>
+                <div className={classes.icons} >
                     <div onClick={() => this.clickType('bug')}>
                         <BugIcon className={classes.icon}/>
                         <div>Bug</div>
@@ -168,7 +160,6 @@ class Survey extends Component {
                         <FeedbackIcon className={classes.icon}/>
                         <div>Suggestion</div>
                     </div>
-                    
                 </div>
             </FormControl>
           </div>
@@ -181,36 +172,23 @@ class Survey extends Component {
   }
 
   _renderfeedbackDone() {
-      const {doneMessage} = this.state;
       return (
           <div>
-              <h1>Thanks So Much</h1>
-                <p>For helping improve the site</p>
+              <h1>Submitted</h1>
+                <p>Thanks for helping to improve the site!</p>
           </div>
       );
   }
-
-  _renderError() {
-    return (
-        <div>
-            <h1>An Error has occured</h1>
-              <p>Your submission failed :|</p>
-              <p>Our team has been notified</p>
-        </div>
-    );
-}
 
   render() {
     const {classes} = this.props;
     const {
         feedbackError, 
         feedbackDone, 
-        onQuestion
+        feedbackType,
+        feedback,
+        onView
     } = this.state;
-
-    if (feedbackError) {
-        return (this._renderError())
-    }
 
     if (feedbackDone) {
         return (this._renderfeedbackDone())
@@ -218,13 +196,32 @@ class Survey extends Component {
 
     return (
         <div className={classes.surveyContainer}>
-            <form className={classes.root} autoComplete="off" onSubmit={e => this.submitFeedback(e)}>
-                {this._renderInitial()}
                 {
-                    onQuestion < surveyQuestions.length && 
-                    <ArrowForwardIcon className={classes.nextIcon} onClick={() => this._slideNext()}/>
+                    onView === 0 &&
+                    this._renderInitial()
                 }
-            </form>
+                {
+                    onView === 1 && 
+                    <div>
+                        <ArrowBackIcon className={classes.prevIcon} onClick={() => this.setState({onView: 0})}/>                        
+                        <div className={classes.nextIcon} style={{color: feedback ? 'navy' : ''}} onClick={() => this.submitFeedback()}>SUBMIT<ArrowForwardIcon/></div>
+                        <h3 style={{color: 'darkgrey', textTransform: 'uppercase'}}>New {feedbackType}</h3>
+                        <TextField 
+                            error={!!feedbackError}
+                            helperText={feedbackError}
+                            onChange={(e) => this.handleChange(e)}
+                            placeholder="Write here"
+                            fullWidth={true}
+                            multiline={true}
+                            rows={1}
+                            rowsMax={4}
+                        />
+                    </div>
+                }
+                {
+                    onView === 2 &&
+                    this._renderfeedbackDone()
+                }
         </div>
     );
   }

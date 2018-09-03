@@ -91,7 +91,8 @@ class Survey extends Component {
   state = {
     hasAttended: null,
     bootcampName: '',
-    onQuestion: -1
+    onQuestion: -1,
+    email: ''
   }
 
   handleButtonClick = name => event => {
@@ -141,18 +142,36 @@ class Survey extends Component {
     )
   }
 
+  validateEmail(email) {
+      if (email.slice(-4) !== '.com') {
+          return false;
+      }
+      if (!email.includes('@')) {
+          return false;
+      }
+      return true;
+  }
+
   submitSurvey = (e) => {
     e.preventDefault();
+    const {email} = this.state;
+    if (!this.validateEmail(email)) {
+        this.setState({surveyError: 'Enter a valid email'});
+        return;
+    } else {
+        this.setState({surveyError: null, submitLoading: true});
+    }
     submitSurvey(this.state)
     .then(res => {
         this.setState({
             surveyDone: true,
-            doneMessage: `A verification email has been sent to ${res.email}`
+            doneMessage: `A verification email has been sent to ${this.state.email}`
         });
     })
     .catch(err => {
         this.setState({
-            surveyError: 'An error has occured'
+            surveyError: 'An error has occured',
+            submitLoading: false
         })
     })
   }
@@ -276,12 +295,14 @@ class Survey extends Component {
 
   _renderConfirmSubmit() {
     const {classes} = this.props;
+    const {surveyError, submitLoading} = this.state;
     return (
         <FormControl className={classes.questionContainer}>
             <TextField
                 id="email"
                 label="Your Email"
-                helperText="Just to verify your review - we won't send you anything"
+                error={!!surveyError}
+                helperText={surveyError || "Just to verify your review - we won't send you anything"}
                 className={classes.textField}
                 onChange={this.handleChange}
                 inputProps={{
@@ -289,15 +310,19 @@ class Survey extends Component {
                 }}
                 margin="normal"
             />
-             <Button 
-                variant="extendedFab" 
-                color="primary" 
-                className={classes.button}
-                onClick={(e) => this.submitSurvey(e)}    
-            >
+            {
+                submitLoading ?
+                <img src="/img/loader.svg" alt="Loading..." /> :
+                <Button 
+                    variant="extendedFab" 
+                    color="primary" 
+                    className={classes.button}
+                    onClick={(e) => this.submitSurvey(e)}    
+                >
                 Submit
                 <DoneIcon className={classes.extendedIcon} />
             </Button>
+            }
           </FormControl>
     );
   }
@@ -379,11 +404,6 @@ class Survey extends Component {
         surveyDone, 
         onQuestion
     } = this.state;
-
-    if (surveyError) {
-        // set alert
-        return (this._renderError())
-    }
 
     if (surveyDone) {
         setCookie('surveyComplete','YES',1000)

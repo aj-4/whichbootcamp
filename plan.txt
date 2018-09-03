@@ -78,9 +78,9 @@ x - Disable service worker
 ----
 God damn SSR, wasted almost all day
 
-TODO - Add feedback BE
+x - Add feedback BE
 TODO - Expose bootcamp URLs (open in new tab?)
-TODO - Fix 'email sent to undefined'
+x - Fix 'email sent to undefined'
 TODO - Handle enter new bootcamp field
 
 FINISH UP - don't drag it out
