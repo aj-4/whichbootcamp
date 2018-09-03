@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import 'babel-polyfill';
 import AOS from 'aos';
-import 'aos/dist/aos.css'
 
 import Header from './components/header';
 import Modal from './components/modal';
