@@ -85,7 +85,8 @@ x - Expose bootcamp URLs (open in new tab?)
 x - Fix 'email sent to undefined'
 x - Handle enter new bootcamp field
 
-
+TODO - Robots.txt
+TODO - Mobile w/ break points
 TODO - Add all locations for GA, Le Wagon
 TODO - shoot video for launch - I'm going to make more detailed videos going forward
 TODO - contact press / product hunt / reddit
