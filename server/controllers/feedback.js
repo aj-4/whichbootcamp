@@ -1,17 +1,21 @@
 const Feedback = require('../models').Feedback;
-const CryptoJS = require("crypto-js");
+const logger = require('../config/winston');
 
 module.exports = {
   create(req, res, next) {
-    console.log('got req', req.body);
+    const {feedbackType, feedback} = req.body;
     return Feedback
       .create({
-        feedbackType: req.body.feedbackType,
-        feedback: req.body.feedback
+        feedbackType,
+        feedback
       })
       .then(() => {
-        res.status(201).send({success: 'true'});
+        logger.info(`[Feedback][${feedbackType}] ${feedback}`)
+        return res.status(201).send({success: 'true'});
       })
-      .catch(error => res.status(400).send(error));
+      .catch((error) => {
+        logger.error(`[Feedback][${feedbackType}] ${feedback} [ERR] ${error}`)
+        return res.status(400).send(error)
+      });
   }
 };

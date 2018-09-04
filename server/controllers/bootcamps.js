@@ -9,28 +9,46 @@ const logger = require('../config/winston');
 
 module.exports = {
   create(req, res, next) {
+    const {name, verified, camel, 
+      websiteURL, logoURL, miniLogoURL, 
+      locations, languages, programs, 
+      bcColor} = req.body;
     return Bootcamp
       .create({
-        name: req.body.name,
-        verified: req.body.verified,
-        camel: req.body.camel,
-        websiteURL: req.body.websiteURL,
-        logoURL: req.body.logoURL,
-        miniLogoURL: req.body.miniLogoURL,
-        locations: req.body.locations,
-        languages: req.body.languages,
-        programs: req.body.programs,
-        bcColor: req.body.bcColor
+        name,
+        verified,
+        camel,
+        websiteURL,
+        logoURL,
+        miniLogoURL,
+        locations,
+        languages,
+        programs,
+        bcColor
       })
       .then(bootcamp => {
-        req.body.bootcampSuccess = bootcamp;
-        next();
+        logger.info(`[Bootcamp][Created] ${name}`);
+        if (!bootcamp.dataValues.verified) {
+          // triggered by adding a review with new bc
+          res.status(201).send({success: true});
+        } else {
+          // triggered by verified full insert endpoint
+          console.log('nexting');
+          req.body.bootcampSuccess = bootcamp;
+          next();
+        }
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => {
+        logger.error(`[Bootcamp][Create Failed]${name} [ERR] ${error}`);
+        res.status(400).send(error)
+      });
   },
   list(req, res, next) {
       return Bootcamp
         .findAll({
+          where: {
+            verified: 1
+          },
           include: [{
             model: Program,
             as: 'Programs',
@@ -40,7 +58,10 @@ module.exports = {
           req.body.bootcamps = bootcamps;
           next();
         })
-        .catch(error => res.status(400).send(error))
+        .catch(error => {
+          logger.error(`[Bootcamp][GET Failed] [ERR] ${error}`);
+          res.status(400).send(error)
+        })
   },
   getReviews(req, res) {
       getAsync('reviewsAveragedTime').then(updatedTS => {
@@ -69,7 +90,9 @@ module.exports = {
           .then( () => {
             res.status(200).send(req.body.bootcamps);
           })
-          .catch(err => console.log('error setting promises', err))
+          .catch(err => {
+            logger.error(`[CACHE][GET Review Avgs failed] [ERR] ${err}`);
+          })
         }
       })
   }

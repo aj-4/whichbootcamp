@@ -10,8 +10,10 @@ const error = require('./server/controllers/error')
 const app = express();
 const PORT = process.env.NODE_ENV === 'production' ? 3000 : 3001;
 
-Raven.config('https://b2d0d26c00b842978a7a5652d077f76d@sentry.io/1272805').install();
-app.use(Raven.requestHandler());
+if (process.env.NODE_ENV === 'production') {
+  Raven.config('https://b2d0d26c00b842978a7a5652d077f76d@sentry.io/1272805').install();
+  app.use(Raven.requestHandler());
+}
 
 app.set('etag', false);
 

@@ -163,14 +163,22 @@ class Survey extends Component {
     }
     submitSurvey(this.state)
     .then(res => {
-        this.setState({
-            surveyDone: true,
-            doneMessage: `A verification email has been sent to ${this.state.email}`
-        });
+        console.log('got res', res);
+        if (!JSON.parse(res.success)) {
+            this.setState({
+                surveyError: res.error,
+                submitLoading: false
+            });    
+        } else {
+            this.setState({
+                surveyDone: true,
+                doneMessage: `A verification email has been sent to ${this.state.email}`
+            });
+        }
     })
     .catch(err => {
         this.setState({
-            surveyError: 'An error has occured',
+            surveyError: 'An error has occured on our end',
             submitLoading: false
         })
     })

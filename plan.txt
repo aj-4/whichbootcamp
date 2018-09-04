@@ -81,7 +81,7 @@ God damn SSR, wasted almost all day
 x - Add feedback BE
 TODO - Expose bootcamp URLs (open in new tab?)
 x - Fix 'email sent to undefined'
-TODO - Handle enter new bootcamp field
+x - Handle enter new bootcamp field
 
 FINISH UP - don't drag it out
 

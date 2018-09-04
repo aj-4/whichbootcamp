@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     camel: {
       type: DataTypes.STRING,
-      allowNull: false,
       unique: true
     },
     websiteURL: DataTypes.STRING,

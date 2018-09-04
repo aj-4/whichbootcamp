@@ -10,7 +10,7 @@ module.exports = (app) => {
     app.post('/api/bootcamps', bootcampController.create, programController.fromBootcamp);
     app.get('/api/bootcamps', bootcampController.list, bootcampController.getReviews);
 
-    app.post('/api/review', reviewController.create, emailController.sendConfirmation);
+    app.post('/api/review', reviewController.create, emailController.sendConfirmation, bootcampController.create);
     app.post('/api/feedback', feedbackController.create);
     // app.get('/api/bootcamps/reviews', bootcampController.getReviews);
 

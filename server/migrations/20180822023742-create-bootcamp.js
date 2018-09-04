@@ -19,7 +19,6 @@ module.exports = {
       },
       camel: {
         type: Sequelize.STRING,
-        allowNull: false,
         unique: true
       },
       websiteURL: Sequelize.STRING,

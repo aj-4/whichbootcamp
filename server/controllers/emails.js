@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const CryptoJS = require("crypto-js");
+const logger = require('../config/winston');
 
 module.exports = {
     sendConfirmation(req, res, next) {
@@ -11,6 +12,8 @@ module.exports = {
         console.log('got hash from email', emailCode);
 
         const confirmURL = process.env.NODE_ENV === 'production' ? 'https://whichbootcamp.com/confirm' : 'http://localhost:3001/confirm'
+
+        logger.info(`[Email][Generated hash] for ${req.body.email}`);
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -29,9 +32,16 @@ module.exports = {
           }
         transporter.sendMail(mailOptions, function(err, response) {
             if (err) {
-                console.error('there was an error: ', err);
+                logger.error(`[Email][Invalid Email] ${req.body.email} [ERR] ${err}`);
+                res.status(400).send({success: 'false', error: 'Email does not exist'});
             } else {
-                res.status(201).send(JSON.stringify({success: true}))
+                logger.info(`[Email][Confirmation sent!] for ${req.body.email}`);
+                if (!req.body.bootcampId) {
+                    req.body.name = req.body.newBootcamp;
+                    next();
+                } else {
+                    res.status(201).send(JSON.stringify({success: true}))
+                }
             }
         })
     },
@@ -54,7 +64,6 @@ module.exports = {
             if (err) {
                 console.error('there was an error: ', err);
             } else {
-                console.log('here is the res: ', response);
                 return res.status(200).send(response);
             }
         })

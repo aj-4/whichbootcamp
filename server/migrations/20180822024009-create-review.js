@@ -32,6 +32,10 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE,
     },
+    bootcampName: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
     bootcampId: {
       type: Sequelize.INTEGER,
       onDelete: 'CASCADE',

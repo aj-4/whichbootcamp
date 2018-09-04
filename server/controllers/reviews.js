@@ -1,11 +1,16 @@
 const Review = require('../models').Review;
 const CryptoJS = require("crypto-js");
+const logger = require('../config/winston');
 
 module.exports = {
   create(req, res, next) {
+    const bcName = req.body.bootcampName === 'unlisted' ? 
+                   req.body.newBootcamp 
+                   : req.body.bootcampName;
     return Review
       .create({
         bootcampId: req.body.bootcampId,
+        bootcampName: bcName,
         email: req.body.email,
         goodInstructors: req.body.goodInstructors,
         jobSpeed: req.body.jobSpeed,
@@ -15,20 +20,24 @@ module.exports = {
         average: req.body.average,
       })
       .then(() => {
+        logger.info(`[Review][Created by] ${req.body.email} for ${bcName}`)
         next();
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => {
+        logger.error(`[Review][Create Error] ${req.body.email} for ${bcName}`)
+        res.status(400).send(error)
+      });
   },
   confirmReview(req, res) {
     const emailCodeToEmail = CryptoJS.AES.decrypt(req.params.emailCode.replace('conf', '/'), 'Emailcrypt').toString(CryptoJS.enc.Utf8);
-    console.log('got email from code', emailCodeToEmail);
+
     return Review
       .update(
         {verified: true},
         {where: {email: emailCodeToEmail}}
       )
       .then(() => {
-        console.log('review verified!')
+        logger.info(`[Review][Confirmed by]${emailCodeToEmail}`)
         res.status(201).send(`
         <!DOCTYPE html>
           <html>
@@ -56,6 +65,9 @@ module.exports = {
 
         `);
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => {
+        logger.error(`[Review][Confirm Error] by ${emailCodeToEmail} [ERR] ${error}`)
+        res.status(400).send(error)
+      });
   }
 };

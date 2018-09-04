@@ -17,6 +17,8 @@ const replaceYesNoWithBool = data => {
             data[key] = 1;
         } else if (data[key] === 'NO' || data[key] === 'NEGATIVE') {
             data[key] = 0;
+        } else if (data[key] === 'MEH') {
+            data[key] = null;
         }
     }
     return data;
