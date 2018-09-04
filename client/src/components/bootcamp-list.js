@@ -9,6 +9,7 @@ import SortBy from './sort-by';
 import ReviewIcon from '@material-ui/icons/RateReview';
 import LayersIcon from '@material-ui/icons/Layers';
 import FlagIcon from '@material-ui/icons/Flag';
+import LinkIcon from '@material-ui/icons/Link';
 
 const styles = theme => ({
     ctr: {
@@ -47,7 +48,7 @@ const styles = theme => ({
         justifyContent: 'space-around',
         alignItems: 'center',
         margin: '0 auto',
-        width: '30%',
+        width: '50%',
         height: '150px'
     },
     actionItem: {
@@ -71,8 +72,15 @@ const styles = theme => ({
 
 class BootcampList extends Component {
 
-    clickCard() {
+    scrollToBootcamps() {
+        document.querySelector('.bc-list').scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
 
+    clickCard() {
+        this.scrollToBootcamps();
     }
 
     clickReview() {
@@ -94,22 +102,26 @@ class BootcampList extends Component {
                     <div className={classes.sectionTitle}>Bootcamps</div>
                     <p>This site is a work in progress, suggestions are greatly appreciated</p>
                     <div className={classes.cta}>
-                       <div className={classes.actionItem} onClick={this.clickCard}>
+                        <div className={classes.actionItem} onClick={() => this.clickCard()}>
+                            <div><LinkIcon className={classes.icon}/></div>
+                            Click a logo  <br/> for full website
+                       </div>
+                       <div className={classes.actionItem} onClick={() => this.clickCard()}>
                             <div><LayersIcon className={classes.icon}/></div>
-                            Click a card<br/> for details 
+                            Click a card  <br/> for details
                        </div>
                        <div className={classes.actionItem} onClick={() => this.clickReview()}>
                             <div><ReviewIcon className={classes.icon}/></div>
-                            Write<br/> a review
+                            Write a Review <br/> For A Bootcamp
                         </div>
                        <div className={classes.actionItem} onClick={() => this.clickBug()}>
                             <div><FlagIcon className={classes.icon}/></div>
-                            Leave feedback<br/>for this site 
+                            Leave feedback<br/> For this site
                         </div>
                     </div>
                 </div>
                 <SortBy handleSort={handleSort} className={classes.sortBy} />    
-                <ul>
+                <ul className={'bc-list'}>
                     {
                         bootcampList.map((bootcampData, i) => {
                             return <BootcampCard key={i} data={bootcampData} i={i} />

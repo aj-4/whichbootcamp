@@ -37,4 +37,4 @@ app.use(Raven.errorHandler());
 app.use(error.clientErrorHandler);
 app.use(error.errorHandler);
 
-app.listen(PORT, () => console.log('listening...'));
+app.listen(PORT, () => console.log(`listening on ${PORT}...`));

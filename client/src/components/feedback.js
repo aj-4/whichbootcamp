@@ -110,7 +110,6 @@ class Survey extends Component {
   }
 
   clickType = feedbackType => {
-      console.log('clicked', feedbackType);
       this.setState({feedbackType, onView: 1});
   }
 

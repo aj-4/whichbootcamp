@@ -6,10 +6,7 @@ module.exports = {
     sendConfirmation(req, res, next) {
         
         let emailCode = CryptoJS.AES.encrypt(req.body.email, 'Emailcrypt').toString();
-        console.log('emailCode is', emailCode, typeof emailCode)
         emailCode = emailCode.split('/').join('conf');
-
-        console.log('got hash from email', emailCode);
 
         const confirmURL = process.env.NODE_ENV === 'production' ? 'https://whichbootcamp.com/confirm' : 'http://localhost:3001/confirm'
 

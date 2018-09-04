@@ -1,4 +1,4 @@
-import {parseBootcampFields, mapStateToSurvey} from '../utils/mappers'
+import {parseBootcampFields, mapStateToSurvey} from '../utils/mappers';
 
 export const fetchBootcamps = () => {
     return fetch('/api/bootcamps')
@@ -48,9 +48,9 @@ export const sendEmail = (name, email, message) => {
     })
     .then((res) => res.json())
     .then((res) => {
-      console.log('here is the response: ', res);
+      console.log('Sent email', res);
     })
     .catch((err) => {
-      console.error('here is the error: ', err);
+      console.error('Error sending email', err);
     })
    }

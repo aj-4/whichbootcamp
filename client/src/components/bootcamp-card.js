@@ -100,7 +100,8 @@ class BootcampCard extends Component {
         bcColor,
         ranking,
         avgReviewStats,
-        Programs
+        Programs,
+        websiteURL
     }, classes, data, i} = this.props;
 
     const reviewCount = +avgReviewStats.reviewCount;
@@ -114,6 +115,7 @@ class BootcampCard extends Component {
         className={`${classes.cardContainer}`}
       >
         <Card className={classes.card}>
+        <a href={websiteURL} target="_blank">
         <CardContent className={classes.cardContent}>
           <div 
             className={classes.cardHeroContainer} 
@@ -137,6 +139,7 @@ class BootcampCard extends Component {
             <img className={classes.cardHeroImg} src={logoURL} alt="logo" />
           </div>
         </CardContent>
+        </a>
           <StatPanels 
             data={data}
           />

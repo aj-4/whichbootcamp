@@ -3,7 +3,6 @@ const logger = require('../config/winston');
 
 module.exports = {
   fromBootcamp(req, res) {
-    console.log('creating program', req.body.programs);
     const programPromises = [];
     const programs = JSON.parse(req.body.programs);
     programs.forEach(program => {

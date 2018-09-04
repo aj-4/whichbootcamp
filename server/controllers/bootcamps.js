@@ -33,7 +33,6 @@ module.exports = {
           res.status(201).send({success: true});
         } else {
           // triggered by verified full insert endpoint
-          console.log('nexting');
           req.body.bootcampSuccess = bootcamp;
           next();
         }

@@ -17,7 +17,7 @@ const replaceYesNoWithBool = data => {
             data[key] = 1;
         } else if (data[key] === 'NO' || data[key] === 'NEGATIVE') {
             data[key] = 0;
-        } else if (data[key] === 'MEH') {
+        } else if (data[key] === 'MEH' || data[key] === 'IT HASN\'T BEEN 6 MONTHS') {
             data[key] = null;
         }
     }
@@ -28,6 +28,5 @@ export const mapStateToSurvey = state => {
     const surveyData = Object.assign({}, state);
     delete surveyData.hasAttended;
     // TODO: create email validation endpoint -- if exists, reject
-    console.log('submitting survey data:', surveyData);
     return replaceYesNoWithBool(surveyData);
 }

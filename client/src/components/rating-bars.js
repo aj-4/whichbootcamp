@@ -101,7 +101,8 @@ const createBar = (className, value) => {
         to: {color: '#2ba040'},
         step: (state, bar) => {
           bar.path.setAttribute('stroke', state.color);
-          bar.setText(Math.round(bar.value() * 100) + ' %');
+          const numToPercent = Math.round(bar.value() * 100);
+          bar.setText(numToPercent ? `${numToPercent}%` : 'N/A');
         }
       });
       
@@ -154,7 +155,7 @@ class RatingBars extends Component {
         const ratingBarList = [];
         for (let stat in statsLabels) {
             const className = `${bootcampName}-${stat}`;
-            
+
             ratingBarList.push(
                 <div key={className}>
                     <div 

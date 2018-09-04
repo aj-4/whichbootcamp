@@ -163,7 +163,6 @@ class Survey extends Component {
     }
     submitSurvey(this.state)
     .then(res => {
-        console.log('got res', res);
         if (!JSON.parse(res.success)) {
             this.setState({
                 surveyError: res.error,
