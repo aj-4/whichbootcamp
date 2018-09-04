@@ -78,14 +78,19 @@ x - Disable service worker
 ----
 God damn SSR, wasted almost all day
 
+9/3
+---
 x - Add feedback BE
-TODO - Expose bootcamp URLs (open in new tab?)
+x - Expose bootcamp URLs (open in new tab?)
 x - Fix 'email sent to undefined'
 x - Handle enter new bootcamp field
 
-FINISH UP - don't drag it out
 
+TODO - Add all locations for GA, Le Wagon
+TODO - shoot video for launch - I'm going to make more detailed videos going forward
 TODO - contact press / product hunt / reddit
+
+FINISH UP - don't drag it out
 
 PW - rlrdovxvqnnwgtcw
 
@@ -95,5 +100,3 @@ V2 IDEAS ==
 Bootcamp-specific pages which scrape news articles from the internet
 Trends based on reviews and sentiment analysis
 A community of people with questions about specific bootcamps / alums
-
-
