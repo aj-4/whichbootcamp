@@ -49,13 +49,19 @@ const styles = theme => ({
         alignItems: 'center',
         margin: '0 auto',
         width: '50%',
-        height: '150px'
+        height: '150px',
+        [theme.breakpoints.down('md')]: {
+            width: '90%',
+        },
     },
     actionItem: {
         textTransform: 'uppercase',
         fontSize: '14px',
         fontWeight: '600',
         color: '#5B6367',
+        [theme.breakpoints.down('md')]: {
+            fontSize: '12px',
+        },
         '&:hover': {
             cursor: 'pointer',
             color: 'black'

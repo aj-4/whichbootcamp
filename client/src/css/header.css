@@ -3,30 +3,6 @@
   /* height: 100vh; */
 }
 
-.background-container {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  z-index: -1;
-}
-
-.background-container img {
-  position: absolute;
-  display: block;
-  top: -90%;
-  left: 0;
-  width: 100vw;
-}
-
-.hero-header {
-  color: #FDFDFD;
-  text-align: left;
-  position: absolute;
-  top: 20%;
-  right: 0%;
-}
-
 .hero-text-container {
   width: 65%;
   text-align: center;
@@ -35,10 +11,6 @@
 .hero-title {
   text-transform: uppercase;
   font-size: 4vw;
-}
-
-.which-text {
-  font-size: 7.5vw;
 }
 
 .App-intro {

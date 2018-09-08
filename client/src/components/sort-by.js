@@ -21,7 +21,10 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    position: 'relative'
+    position: 'relative',
+    [theme.breakpoints.down('md')]: {
+        marginTop: '50px'
+    },
   },
   title: {
     left: '2%',
@@ -31,7 +34,10 @@ const styles = theme => ({
     textTransform: 'uppercase',
     fontSize: '30px',
     letterSpacing: '3px',
-    color: 'lightgrey'
+    color: 'lightgrey',
+    [theme.breakpoints.down('md')]: {
+        top: '-10%'
+    },
   },
   menuItem: {
     float: 'left',

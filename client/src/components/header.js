@@ -5,7 +5,7 @@ import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 const styles = theme => ({
     ctr: {
-        marginTop: '30px'
+        marginTop: '30px',
     },
     button: {
         backgroundColor: 'white',
@@ -22,12 +22,75 @@ const styles = theme => ({
         '&:hover': {
             cursor: 'pointer',
             backgroundColor: 'rgba(255,255,255,.8)'
+        },
+        [theme.breakpoints.down('md')]: {
+            width: '60%'
+        }
+    },
+    backgroundContainer: {
+        width: '100vw',
+        height: '100vh',
+        position: 'relative',
+        overflow: 'hidden',
+        zIndex: '-1',
+    },
+    bgImage: {
+        position: 'absolute',
+        display: 'block',
+        top: '-100%',
+        left: '0',
+        width: '100%',
+        [theme.breakpoints.down('md')]: {
+            height: '100%',
+            top: '0',
+            left: '0%',
+            width: '100%'    
+        },
+        [theme.breakpoints.down('sm')]: {
+            height: '800px',
+            top: '0',
+            left: '-10%',
+            width: '150%'    
+        }
+    },
+    heroTextContainer: {
+        width: '65%',
+        textAlign: 'center',
+        [theme.breakpoints.down('md')]: {
+            width: '80%'
+        }
+    },
+    heroHeader: {
+        color: '#FDFDFD',
+        textAlign: 'left',
+        position: 'absolute',
+        top: '20%',
+        right: '0%'
+    },  
+    whichText: {
+        fontSize: '7.5vw',
+        [theme.breakpoints.down('md')]: {
+            fontSize: '12vw'
         }
     },
     buttonText: {
         textTransform: 'uppercase',
         fontSize: '14px',
         fontWeight: '800'
+    },
+    typewriterText: {
+        position: 'relative',
+        top: '50%',  
+        width: '19em',
+        margin: '0 auto',
+        borderRight: '10px solid rgba(255,255,255,.75)',
+        textAlign: 'center',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        transform: 'translateY(-50%)',    
+        [theme.breakpoints.down('md')]: {
+            display: 'none'
+        }
     }
 });
 
@@ -43,15 +106,15 @@ class Header extends Component {
         const {classes} = this.props;
         return (
             <div>
-                <div className="background-container">
-                    <img src="/img/homescreen.jpg" alt="" />
+                <div className={classes.backgroundContainer}>
+                    <img className={classes.bgImage} src="/img/homescreen.jpg" alt="" />
                 </div>
-                <header className="hero-header">
-                    <div className="hero-text-container">
+                <header className={classes.heroHeader}>
+                    <div className={classes.heroTextContainer}>
                     <h1 className="animated fadeIn hero-title">
-                        <span className="which-text">Which</span> Bootcamp?
+                        <span className={classes.whichText}>Which</span> Bootcamp?
                     </h1>
-                    <div className="animated fadeInDown typewriter-text anim-typewriter">
+                    <div className={`animated fadeInDown ${classes.typewriterText} anim-typewriter`}>
                         A list of the most popular coding bootcamps
                     </div>
                     <div className={classes.ctr}>
